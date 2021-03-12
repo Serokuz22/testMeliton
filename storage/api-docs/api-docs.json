@@ -1,0 +1,160 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Тестовое задание meleton",
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/v1/convert": {
+            "post": {
+                "summary": "Конвертировать",
+                "parameters": [
+                    {
+                        "name": "currency_from",
+                        "in": "query",
+                        "description": "исходная валюта",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "currency_to",
+                        "in": "query",
+                        "description": "валюта в которую конвертируем",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "value",
+                        "in": "query",
+                        "description": "количество единиц исходной валюты",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "currency_from": {
+                                            "type": "string",
+                                            "example": "исходная валюта"
+                                        },
+                                        "currency_to": {
+                                            "type": "string",
+                                            "example": "валюта в которую конвертируем"
+                                        },
+                                        "value": {
+                                            "type": "number",
+                                            "example": "количество единиц исходной валюты"
+                                        },
+                                        "converted_value": {
+                                            "type": "number",
+                                            "example": "количество единиц валюты после обмена"
+                                        },
+                                        "rate": {
+                                            "type": "number",
+                                            "example": "курс"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "example": "дата создания"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Auth error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/rates": {
+            "get": {
+                "summary": "Получить список всех валют",
+                "responses": {
+                    "200": {
+                        "description": "Возврашает array со списком страниц",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Auth error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/rates?filter[currency]={currency}": {
+            "get": {
+                "summary": "Получить одну валюту",
+                "parameters": [
+                    {
+                        "name": "currency",
+                        "in": "path",
+                        "description": "Currency",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Возврашает array со списком страниц",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Auth error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "name": "bearerAuth",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "security": [
+        []
+    ]
+}
